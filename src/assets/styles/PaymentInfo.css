@@ -1,0 +1,19 @@
+.payment-info-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .payment-card {
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payment-card-content {
+    display: flex;
+    flex-direction: column;
+  }
+  

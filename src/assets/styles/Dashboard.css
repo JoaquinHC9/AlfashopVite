@@ -1,0 +1,31 @@
+.dashboard-root {
+  display: flex;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  margin-left: -250px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;  
+}
+
+.product-card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+}

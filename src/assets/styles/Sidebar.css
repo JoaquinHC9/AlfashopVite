@@ -1,0 +1,25 @@
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 8px; 
+    min-height: 64px;
+  }
+  
+  .drawer-open {
+    width: 240px; /* Ancho cuando la barra lateral está abierta */
+    transition: width 225ms cubic-bezier(0.4, 0, 0.2, 1); 
+    overflow-x: hidden;
+  }
+  
+  .drawer-close {
+    width: 60px; /* Ancho mínimo cuando la barra lateral está cerrada */
+    transition: width 225ms cubic-bezier(0.4, 0, 0.2, 1); 
+    overflow-x: hidden;
+  }
+  
+
+  .drawer-close-sm {
+    width: calc(73px + 1px); 
+  }
+  

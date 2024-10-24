@@ -1,0 +1,14 @@
+.dashboard-appbar {
+    z-index: 1201;
+    transition: width 0.3s ease, margin 0.3s ease;
+  }
+  
+  .dashboard-appbar.open {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+  }
+  
+  .drawer-width {
+    width: 240px; /
+  }
+  
