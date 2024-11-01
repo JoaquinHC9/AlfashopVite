@@ -26,11 +26,11 @@ const Register: React.FC = () => {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post(`${API_URL}/register`, {
+      const response = await axios.post(`${API_URL}/v1/auth/registrar`, {
         nombre: formData.nombre,
         apellido: formData.apellido,
         email: formData.email,
-        contrasena: formData.contrasena, // Cambia "contra" a "contrasena"
+        contrasena: formData.contrasena,
         telefono: formData.telefono,
         fechaNacimiento: formData.fechaNacimiento
       });
