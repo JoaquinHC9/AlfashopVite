@@ -60,7 +60,7 @@ const Header: React.FC<CustomAppBarProps> = ({ open, handleDrawerOpen }) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-          Compuya
+          Alfashop
         </Typography>
         {auth() ? (
           <Button color="inherit" onClick={logout}>Logout</Button>

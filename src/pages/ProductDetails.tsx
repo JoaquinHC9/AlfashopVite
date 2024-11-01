@@ -17,7 +17,7 @@ const ProductDetails: React.FC = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`${API_URL}/products/${productId}`);
+        const response = await fetch(`${API_URL}/v1/productos/producto/${productId}`);
         if (response.ok) {
           const data = await response.json();
           setProduct(data);
@@ -43,15 +43,15 @@ const ProductDetails: React.FC = () => {
   };
 
   const addToCart = () => {
-    if (quantity > product!.availableQuantity) {
+    if (quantity > product!.stock) {
       toast.error(`Numero de unidad seleccionadas superan el stock`);
-      toast.error(`Stock: ${product!.availableQuantity} unidades`);
+      toast.error(`Stock: ${product!.stock} unidades`);
       return;
     }
 
     const cartItem: CartItem = {
-      productId: product!.id,
-      productName: product!.name,
+      productId: product!.idProducto,
+      productName: product!.nombre,
       quantity: quantity
     };
 
@@ -80,16 +80,19 @@ const ProductDetails: React.FC = () => {
         Detalles del Producto
       </Typography>
       <Typography variant="h6" color="primary">
-        {product.name}
+        {product.nombre}
       </Typography>
       <Typography variant="body1">
-        {product.description}
+        {product.descripcion}
+      </Typography>
+      <Typography variant="h6" color="primary">
+        Tipo: {product.nombreCategoria}
       </Typography>
       <Typography variant="body1" color="secondary">
-        Precio: ${product.price.toFixed(2)}
+        Precio: ${product.precio.toFixed(2)}
       </Typography>
       <Typography variant="body2">
-        Disponibles: {product.availableQuantity}
+        Disponibles: {product.stock}
       </Typography>
       <div>
         <TextField

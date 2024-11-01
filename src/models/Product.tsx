@@ -1,10 +1,10 @@
 export interface Product {
-    id: number;
-    name: string;
-    description: string;
-    availableQuantity: number;
-    price: number;
-    categoryId: number;
-    categoryName: string;
-    categoryDescription: string;
-  } 
+  idProducto: number;
+  nombre: string;
+  descripcion: string;
+  stock: number;
+  precio: number;
+  idCategoria: number;
+  nombreCategoria: string;
+  descripcionCategoria: string;
+} 

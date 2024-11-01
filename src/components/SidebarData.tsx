@@ -16,17 +16,17 @@ export const SidebarData: SidebarItem[] = [
     link: '/',
   },
   {
-    title: 'Shopping Cart',
+    title: 'Carrito',
     icon: <ShoppingCartIcon />,
     link: '/Cart',
   },
   {
-    title: 'Categories',
+    title: 'Categorias',
     icon: <CategoryIcon />,
     link: '/categories',
   },
   {
-    title: 'Customer Info',
+    title: 'Perfil',
     icon: <PeopleIcon />,
     link: '/customerinfo',
   },

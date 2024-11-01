@@ -22,7 +22,7 @@ const Cart: React.FC = () => {
 
     const fetchProducts = async () => {
       const productPromises = storedCart.map((item: CartItem) =>
-        fetch(`${API_URL}/products/${item.productId}`)
+        fetch(`${API_URL}/v1/productos/producto/${item.productId}`)
           .then(response => response.json())
       );
       const productsData = await Promise.all(productPromises);
@@ -85,10 +85,10 @@ const Cart: React.FC = () => {
       ) : (
         <div>
           {cart.map((item, index) => {
-            const product = products.find(p => p.id === item.productId);
+            const product = products.find(p => p.idProducto === item.productId);
             return (
               <div key={item.productId}>
-                <Typography variant="body1">{product?.name || `Producto ID: ${item.productId}`}</Typography>
+                <Typography variant="body1">{product?.nombre || `Producto ID: ${item.productId}`}</Typography>
                 <Typography variant="body2">Cantidad: {item.quantity}</Typography>
               </div>
             );

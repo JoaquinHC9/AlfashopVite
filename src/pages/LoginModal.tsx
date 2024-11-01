@@ -31,16 +31,16 @@ interface LoginModalProps {
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ open, handleClose }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [contra, setContra] = useState('');
   const [error, setError] = useState('');  
   const signIn = useSignIn();
 
   const loginAPI = async () => {
     try {
-      const response = await axios.post(`${API_URL}/users/login`, {
-        username: username,
-        password: password,
+      const response = await axios.post(`${API_URL}/v1/auth/login`, {
+        email: email,
+        contrasena: contra,
       });      
       return response.data;
     } catch (error) {
@@ -53,14 +53,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, handleClose }) => {
     try {
       const data = await loginAPI();      
       if (data) {
-        const token = data;
-        const decodedToken = jwtDecode<CustomJwtPayload>(token);
-        const customer_id = decodedToken.userId;        
+        const token = data;     
         const auth = signIn({
           token: token,
           expiresIn: 3600,
           tokenType: 'Bearer',
-          authState: { username: username, customer_id: customer_id },
+          authState: { email: email},
         });
         if (auth) {
           toast.success('Login Exitoso');
@@ -93,8 +91,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, handleClose }) => {
           label="Usuario"
           variant="outlined"
           fullWidth
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           margin="normal"
         />
         <TextField
@@ -102,8 +100,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, handleClose }) => {
           type="password"
           variant="outlined"
           fullWidth
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={contra}
+          onChange={(e) => setContra(e.target.value)}
           margin="normal"
         />
         {error && <Typography color="error">{error}</Typography>}

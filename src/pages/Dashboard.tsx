@@ -19,7 +19,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`${API_URL}/products`);
+        const response = await fetch(`${API_URL}/v1/productos`);
         if (response.ok) {
           const data = await response.json();
           setProducts(data); 
@@ -51,7 +51,7 @@ const Dashboard = () => {
   return (    
     <Box className="dashboard-root">
       <Helmet>
-        <title>Compuya Dashboard</title>
+        <title>Alfashop Dashboard</title>
       </Helmet>
       <CssBaseline />
       <Header open={open} handleDrawerOpen={handleDrawerOpen}/>
@@ -70,18 +70,18 @@ const Dashboard = () => {
           ) : (        
             <div className="product-grid">
               {products.map((product) => (
-                <div key={product.id} className="product-card" onClick={() => goToProductDetails(product.id)}>
+                <div key={product.idProducto} className="product-card" onClick={() => goToProductDetails(product.idProducto)}>
                   <Typography variant="h6" color="primary">
-                    {product.name}
+                    {product.nombre}
                   </Typography>
                   <Typography variant="body1">
-                    {product.description}
+                    {product.descripcion}
                   </Typography>
                   <Typography variant="body1" color="secondary">
-                    Precio: ${product.price.toFixed(2)}
+                    Precio: ${product.precio.toFixed(2)}
                   </Typography>
                   <Typography variant="body2">
-                    Disponibles: {product.availableQuantity}
+                    Disponibles: {product.stock}
                   </Typography>
                 </div>
               ))}

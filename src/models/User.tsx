@@ -5,14 +5,9 @@ export type UserProfileToken = {
     token: string;
   };
   
-  export type UserProfile = {
-    userName: string;
-    email: string;
-  };
   export type UserRegister = {
-    firstname: string;
-    lastname: string;
-    username: string;
+    nombre: string;
+    apellido: string;
+    email: string;
     password: string;
-    roleList: string[];
 };
