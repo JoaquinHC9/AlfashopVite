@@ -3,15 +3,16 @@ import { TextField, Button, Typography, Container } from "@mui/material";
 import axios from "axios";  // Import axios if not already imported
 import { UserRegister } from "../models/User";
 import Swal from "sweetalert2";
-const api = "http://192.168.1.78:8222/api/v1/users";  // Define the API endpoint
+import API_URL from '../config/config';
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState<UserRegister>({
-    firstname: "",
-    lastname: "",
-    username: "",
-    password: "",
-    roleList: ["USER"]
+    nombre: "",
+    apellido: "",
+    email: "",
+    contrasena: "",
+    telefono:"",
+    fechaNacimiento: new Date()
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -24,30 +25,32 @@ const Register: React.FC = () => {
   };
 
   const handleRegister = async () => {
-    try {      
-      const response = await axios.post(api + "/register", {
-        firstname: formData.firstname,
-        lastname: formData.lastname,
-        username: formData.username,
-        password: formData.password,
-        roleList: formData.roleList
+    try {
+      const response = await axios.post(`${API_URL}/register`, {
+        nombre: formData.nombre,
+        apellido: formData.apellido,
+        email: formData.email,
+        contrasena: formData.contrasena, // Cambia "contra" a "contrasena"
+        telefono: formData.telefono,
+        fechaNacimiento: formData.fechaNacimiento
       });
       Swal.fire({
         icon: 'success',
         title: 'Registro exitoso',
         text: 'El usuario se ha registrado correctamente.',
       });
-      console.log(response)
+      console.log(response);
     } catch (error) {
       console.error("Register Error:", error);
       setError("Error al registrar usuario");
       Swal.fire({
         icon: 'error',
         title: 'Error en el registro',
-        text: 'El correo ya se encuentra registrados en el sistema',
+        text: 'El correo ya se encuentra registrado en el sistema',
       });
     }
   };
+  
 
   return (
     <Container maxWidth="sm">
@@ -55,42 +58,61 @@ const Register: React.FC = () => {
         Registro
       </Typography>
       <TextField
-        name="firstname"
+        name="nombre"
         label="Nombre"
         variant="outlined"
         fullWidth
-        value={formData.firstname}
+        value={formData.nombre}
         onChange={handleInputChange}
         margin="normal"
       />
       <TextField
-        name="lastname"
+        name="apellido"
         label="Apellido"
         variant="outlined"
         fullWidth
-        value={formData.lastname}
+        value={formData.apellido}
         onChange={handleInputChange}
         margin="normal"
       />
       <TextField
-        name="username"
+        name="email"
         label="Correo electrónico"
         variant="outlined"
         fullWidth
-        value={formData.username}
+        value={formData.email}
         onChange={handleInputChange}
         margin="normal"
       />
       <TextField
-        name="password"
+        name="contra"
         label="Contraseña"
         type="password"
         variant="outlined"
         fullWidth
-        value={formData.password}
+        value={formData.contrasena}
         onChange={handleInputChange}
         margin="normal"
       />
+      <TextField
+        name="telefono"
+        label="Telefono"
+        variant="outlined"
+        fullWidth
+        value={formData.telefono}
+        onChange={handleInputChange}
+        margin="normal"
+      />
+      <TextField
+        name="fechaNacimiento"
+        label="Fecha Nacimiento"
+        type="date"
+        variant="outlined"
+        fullWidth
+        value={formData.fechaNacimiento.toISOString().substring(0, 10)}
+        onChange={handleInputChange}
+        margin="normal"
+      />      
       {error && <Typography color="error">{error}</Typography>}
       <Button
         variant="contained"

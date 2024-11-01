@@ -9,5 +9,7 @@ export type UserProfileToken = {
     nombre: string;
     apellido: string;
     email: string;
-    password: string;
-};
+    contrasena: string;
+    telefono: string;
+    fechaNacimiento: Date;
+  };  
