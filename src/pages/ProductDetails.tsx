@@ -10,14 +10,14 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { toast } from 'react-toastify';
 import API_URL from '../config/config';
 const ProductDetails: React.FC = () => {
-  const { productId } = useParams();
+  const { idProducto } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
-  const [quantity, setQuantity] = useState<number>(1);
+  const [cantidad, setcantidad] = useState<number>(1);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`${API_URL}/v1/productos/producto/${productId}`);
+        const response = await fetch(`${API_URL}/v1/productos/producto/${idProducto}`);
         if (response.ok) {
           const data = await response.json();
           setProduct(data);
@@ -32,38 +32,38 @@ const ProductDetails: React.FC = () => {
     };
 
     fetchProductDetails();
-  }, [productId]);
+  }, [idProducto]);
 
-  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlecantidadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = parseInt(event.target.value);
     if (isNaN(value)) {
       value = 1;
     }
-    setQuantity(value);
+    setcantidad(value);
   };
 
   const addToCart = () => {
-    if (quantity > product!.stock) {
+    if (cantidad > product!.stock) {
       toast.error(`Numero de unidad seleccionadas superan el stock`);
       toast.error(`Stock: ${product!.stock} unidades`);
       return;
     }
 
     const cartItem: CartItem = {
-      productId: product!.idProducto,
-      productName: product!.nombre,
-      quantity: quantity
+      idProducto: product!.idProducto,
+      nombreProducto: product!.nombre,
+      cantidad: cantidad
     };
 
     let cart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItemIndex = cart.findIndex(item => item.productId === cartItem.productId);
+    const existingItemIndex = cart.findIndex(item => item.idProducto === cartItem.idProducto);
     if (existingItemIndex !== -1) {
-      cart[existingItemIndex].quantity += cartItem.quantity;
+      cart[existingItemIndex].cantidad += cartItem.cantidad;
     } else {
       cart.push(cartItem);
     }
     localStorage.setItem('cart', JSON.stringify(cart));
-    toast.success(`Se han agregado ${quantity} unidad(es) al carrito`);    
+    toast.success(`Se han agregado ${cantidad} unidad(es) al carrito`);    
   };
 
   if (loading) {
@@ -98,8 +98,8 @@ const ProductDetails: React.FC = () => {
         <TextField
           type="number"
           label="Cantidad"
-          value={quantity}
-          onChange={handleQuantityChange}
+          value={cantidad}
+          onChange={handlecantidadChange}
           InputProps={{
             inputProps: { min: 1 },
             startAdornment: <InputAdornment position="start">Unidades</InputAdornment>,

@@ -23,9 +23,9 @@ export default function Login() {
 
   const loginAPI = async () => {
     try {
-      const response = await axios.post(`${API_URL}/users/login`, {
-        username: username,
-        password: password,
+      const response = await axios.post(`${API_URL}/v1/auth/login`, {
+        email: username,
+        contrasena: password,
       });      
       return response.data;
     } catch (error) {
@@ -40,12 +40,13 @@ export default function Login() {
       if (data) {
         const token = data;
         const decodedToken = jwtDecode<CustomJwtPayload>(token);
-        const customer_id = decodedToken.userId;        
+        console.log(decodedToken)
+        const customerId = decodedToken.userId;
         const auth = signIn({
           token: token,
           expiresIn: 3600,
           tokenType: "Bearer",
-          authState: { username: username, customer_id: customer_id },
+          authState: { username: username, customerId: customerId },
         });
 
         if (auth) {

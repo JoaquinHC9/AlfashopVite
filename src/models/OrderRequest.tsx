@@ -3,6 +3,6 @@ import { CartItem } from './CartItem';
 
 export interface OrderRequest {
   customerId: number;
-  paymentMethod: string; 
-  products: CartItem[];
+  metodoPago: string; 
+  productos: CartItem[];
 }

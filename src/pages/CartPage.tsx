@@ -9,35 +9,36 @@ import MenuItem from "@mui/material/MenuItem";
 import { useAuthUser } from 'react-auth-kit';
 import API_URL from '../config/config';
 import Swal from 'sweetalert2';
+
 const Cart: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [paymentMethod, setPaymentMethod] = useState<string>('PAYPAL');  
+  const [productos, setProductos] = useState<Product[]>([]);
+  const [metodoPago, setMetodoPago] = useState<string>('PAYPAL');
   const auth = useAuthUser();
-  const customerId = auth()?.customer_id; 
+  const customerId = auth()?.customerId; // Obtener el ID del cliente desde react-auth-kit
+  const token = localStorage.getItem("_auth");
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart') || '[]');
     setCart(storedCart);
-
-    const fetchProducts = async () => {
-      const productPromises = storedCart.map((item: CartItem) =>
-        fetch(`${API_URL}/v1/productos/producto/${item.productId}`)
-          .then(response => response.json())
-      );
-      const productsData = await Promise.all(productPromises);
-      setProducts(productsData);
-    };
-
-    fetchProducts();
+    fetchProducts(storedCart);
   }, []);
 
-  const handlePaymentMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPaymentMethod(event.target.value);
+  const fetchProducts = async (cartItems: CartItem[]) => {
+    const productPromises = cartItems.map((item: CartItem) =>
+      fetch(`${API_URL}/v1/productos/producto/${item.idProducto}`)
+        .then(response => response.json())
+    );
+    const productsData = await Promise.all(productPromises);
+    setProductos(productsData);
+  };
+
+  const handlemetodoPagoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMetodoPago(event.target.value);
   };
 
   const createOrder = async () => {
-    if (!customerId) {
+    if (!customerId || !token) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -46,34 +47,47 @@ const Cart: React.FC = () => {
       return;
     }
 
-    const orderRequest = {
-      customerId: customerId,
-      paymentMethod: paymentMethod,
-      products: cart
+    const pedidoRequest = {
+      idUsuario: customerId,
+      metodoPago: metodoPago,
+      productos: cart,
     };
 
-    const response = await fetch(`${API_URL}/orders`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(orderRequest)
-    });
+    try {
+      const response = await fetch(`${API_URL}/v1/pedidos/crear`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Usar el token del estado global
+        },
+        body: JSON.stringify(pedidoRequest),
+      });
 
-    if (response.ok) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Orden Registrada Exitosamente',
-        text: 'La orden de compra se ha registrado correctamente.',
-      });      
-      localStorage.removeItem('cart');      
-    } else {
+      if (response.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Orden Registrada Exitosamente',
+          text: 'La orden de compra se ha registrado correctamente.',
+        });
+        localStorage.removeItem('cart');
+        setCart([]); // Vaciar el carrito
+        setProductos([]); // Vaciar los productos actuales
+        fetchProducts([]); // Refrescar los productos
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al ejecutar la orden.',
+        });
+        console.log(response);
+      }
+    } catch (error) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Error al ejecutar la orden.',
-      }); 
-      console.log(response)      
+        text: 'Error al realizar la compra.',
+      });
+      console.error(error);
     }
   };
 
@@ -85,19 +99,19 @@ const Cart: React.FC = () => {
       ) : (
         <div>
           {cart.map((item, index) => {
-            const product = products.find(p => p.idProducto === item.productId);
+            const product = productos.find(p => p.idProducto === item.idProducto);
             return (
-              <div key={item.productId}>
-                <Typography variant="body1">{product?.nombre || `Producto ID: ${item.productId}`}</Typography>
-                <Typography variant="body2">Cantidad: {item.quantity}</Typography>
+              <div key={item.idProducto}>
+                <Typography variant="body1">{product?.nombre || `Producto ID: ${item.idProducto}`}</Typography>
+                <Typography variant="body2">Cantidad: {item.cantidad}</Typography>
               </div>
             );
           })}
           <TextField
             select
             label="Método de Pago"
-            value={paymentMethod}
-            onChange={handlePaymentMethodChange}
+            value={metodoPago}
+            onChange={handlemetodoPagoChange}
             variant="outlined"
             margin="normal"
           >
@@ -108,9 +122,9 @@ const Cart: React.FC = () => {
             <MenuItem value="BITCOIN">Bitcoin</MenuItem>
           </TextField>
           <div>
-          <Button variant="contained" color="primary" onClick={createOrder}>
-            Comprar
-          </Button>
+            <Button variant="contained" color="primary" onClick={createOrder}>
+              Comprar
+            </Button>
           </div>
         </div>
       )}
