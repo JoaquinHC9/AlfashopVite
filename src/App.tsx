@@ -59,7 +59,7 @@ export default function App() {
             <Route path="/customerinfo" element={<CustomersInfo />} /> 
             <Route path="/cart/" element={<CartPage />} /> 
             <Route path="*" element={<NotFound />} />
-            <Route path="/payments/:id" element={<PaymentInfo />} />
+            <Route path="/paymentinfo" element={<PaymentInfo />} />
           </Routes>
         </div>
       </Router>

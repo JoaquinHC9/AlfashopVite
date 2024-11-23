@@ -2,7 +2,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CategoryIcon from '@mui/icons-material/Category';
 import PeopleIcon from '@mui/icons-material/People';
-
+import PaymentsIcon from '@mui/icons-material/Payments';
 export interface SidebarItem {
   title: string;
   icon: JSX.Element;
@@ -29,5 +29,10 @@ export const SidebarData: SidebarItem[] = [
     title: 'Perfil',
     icon: <PeopleIcon />,
     link: '/customerinfo',
+  },
+  {
+    title: 'Pagos',
+    icon: <PaymentsIcon />,
+    link: '/paymentinfo',
   },
 ];
