@@ -1,7 +1,6 @@
-// LoginModal.tsx
 import React, { useState } from 'react';
 import Modal from '@mui/material/Modal';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography, Link } from '@mui/material';
 import { useSignIn } from 'react-auth-kit';
 import { handleLogin } from './LoginLogic';
 import { toast } from 'react-toastify';
@@ -64,7 +63,21 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, handleClose }) => {
           margin="normal"
         />
         {error && <Typography color="error">{error}</Typography>}
-        <Button variant="contained" color="primary" onClick={handleLoginClick}>Iniciar sesión</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleLoginClick}
+          fullWidth
+          sx={{ mt: 2 }}
+        >
+          Iniciar sesión
+        </Button>
+        <Typography align="center" sx={{ mt: 2 }}>
+          ¿No tienes cuenta?{' '}
+          <Link href="/register" color="primary" underline="hover">
+            Regístrate aquí
+          </Link>
+        </Typography>
       </Box>
     </Modal>
   );

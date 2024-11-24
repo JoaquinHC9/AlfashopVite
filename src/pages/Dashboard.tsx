@@ -49,14 +49,14 @@ const Dashboard = () => {
   };
 
   return (    
-    <Box className="dashboard-root">
+    <Box className="dashboard-root" >
       <Helmet>
         <title>Alfashop Dashboard</title>
       </Helmet>
       <CssBaseline />
       <Header open={open} handleDrawerOpen={handleDrawerOpen}/>
       <Sidebar open={open} handleDrawerClose={handleDrawerClose} />
-      <Box className="dashboard-content">
+      <Box className="dashboard-content" sx={{m:5,ml:10}}>
         <Container>
           <Typography variant="h2" color="secondary">
             Bienvenido

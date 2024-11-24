@@ -159,7 +159,7 @@ const ProductDetails: React.FC = () => {
   }
 
   return (
-    <Container>
+    <Container sx={{m:5,ml:5}}>
       <Typography variant="h2" color="primary">Detalles del Producto</Typography>
       <Typography variant="h6" color="primary">{product.nombre}</Typography>
       <Typography variant="body1">{product.descripcion}</Typography>
