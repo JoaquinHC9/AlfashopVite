@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
@@ -54,7 +53,6 @@ const Dashboard = () => {
         <title>Alfashop Dashboard</title>
       </Helmet>
       <CssBaseline />
-      <Header open={open} handleDrawerOpen={handleDrawerOpen}/>
       <Sidebar open={open} handleDrawerClose={handleDrawerClose} />
       <Box className="dashboard-content" sx={{m:5,ml:10}}>
         <Container>

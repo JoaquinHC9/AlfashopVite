@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "mocha './src/tests/*.spec.ts'"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -20,6 +21,7 @@
     "bootstrap": "^5.3.3",
     "date-fns": "^2.30.0",
     "jwt-decode": "^4.0.0",
+    "mocha": "^10.8.2",
     "react": "^18.3.1",
     "react-auth-kit": "^2.12.7",
     "react-bootstrap": "^2.10.3",
@@ -27,7 +29,9 @@
     "react-helmet": "^6.1.0",
     "react-router-dom": "^6.24.0",
     "react-toastify": "^10.0.5",
-    "sweetalert2": "^11.12.2"
+    "selenium-webdriver": "^4.27.0",
+    "sweetalert2": "^11.12.2",
+    "webdriver-manager": "^12.1.9"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

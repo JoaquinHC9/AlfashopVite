@@ -18,19 +18,19 @@ import { Product } from '../models/Product';
 import { CartItem } from '../models/CartItem';
 import { useAuthUser } from 'react-auth-kit';
 import Swal from 'sweetalert2';
+
 interface Review {
   idUsuario: number;
   idProducto: number;
   comentario: string;
-  puntuacion: number; 
+  puntuacion: number;
 }
-
 
 const ProductDetails: React.FC = () => {
   const { idProducto } = useParams();
   const auth = useAuthUser();
   const [product, setProduct] = useState<Product | null>(null);
-  const [cantidad, setCantidad] = useState<number>(1);
+  const [cantidad, setCantidad] = useState<string>(''); // Inicia como cadena vacía
   const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [newReview, setNewReview] = useState({
@@ -75,12 +75,13 @@ const ProductDetails: React.FC = () => {
     fetchReviews();
   }, [idProducto]);
 
-  const handleCantidadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let value = parseInt(event.target.value);
-    if (isNaN(value)) {
-      value = 1;
+  const handleCantidadChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const newValue = e.target.value;
+
+    // Verifica que el valor ingresado sea un número válido y mayor o igual a 1
+    if (newValue === '' || (!isNaN(Number(newValue)) && Number(newValue) >= 1)) {
+      setCantidad(newValue); // Actualiza el estado con el nuevo valor
     }
-    setCantidad(value);
   };
 
   const handleReviewChange = (field: string, value: string | number) => {
@@ -128,7 +129,14 @@ const ProductDetails: React.FC = () => {
   };
 
   const addToCart = () => {
-    if (cantidad > product!.stock) {
+    if (cantidad === '' || isNaN(Number(cantidad)) || Number(cantidad) <= 0) {
+      toast.error('Por favor ingresa una cantidad válida');
+      return;
+    }
+
+    const cantidadInt = Number(cantidad);
+
+    if (cantidadInt > product!.stock) {
       toast.error(`Número de unidades seleccionadas supera el stock`);
       return;
     }
@@ -136,7 +144,7 @@ const ProductDetails: React.FC = () => {
     const cartItem: CartItem = {
       idProducto: product!.idProducto,
       nombreProducto: product!.nombre,
-      cantidad,
+      cantidad: cantidadInt,
     };
 
     let cart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -147,7 +155,7 @@ const ProductDetails: React.FC = () => {
       cart.push(cartItem);
     }
     localStorage.setItem('cart', JSON.stringify(cart));
-    toast.success(`Se han agregado ${cantidad} unidad(es) al carrito`);
+    toast.success(`Se han agregado ${cantidadInt} unidad(es) al carrito`);
   };
 
   if (loading) {
