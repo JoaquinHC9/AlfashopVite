@@ -171,6 +171,7 @@ const Register: React.FC = () => {
             value={formData.fechaNacimiento}
             onChange={handleDateChange}
             slots={{ textField: (props) => <TextField {...props} fullWidth /> }}
+            slotProps={{ openPickerButton: { 'aria-label': 'Choose new calendar date' } }}
           />
         </LocalizationProvider>
       </Box>

@@ -1,0 +1,142 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-11-28T02:37:19.030Z",
+    "end": "2024-11-28T02:37:22.458Z",
+    "duration": 3428,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "19fc4f42-fad5-4e25-87b8-d077f70b3439",
+      "title": "",
+      "fullFile": "C:\\Users\\USER\\Desktop\\Proyectos\\AlfashopVite\\src\\tests\\loginTest.spec.js",
+      "file": "\\src\\tests\\loginTest.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "55e09e4e-0656-4fcc-a779-1bafb09b0f1e",
+          "title": "Pruebas de Login Modal",
+          "fullFile": "C:\\Users\\USER\\Desktop\\Proyectos\\AlfashopVite\\src\\tests\\loginTest.spec.js",
+          "file": "\\src\\tests\\loginTest.spec.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Pruebas de Login Modal\"",
+              "fullTitle": "Pruebas de Login Modal \"before all\" hook in \"Pruebas de Login Modal\"",
+              "timedOut": false,
+              "duration": 956,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "driver = await new Builder().forBrowser('chrome').build();",
+              "err": {},
+              "uuid": "6c7623df-02bd-480a-81b9-992e3c8f03ea",
+              "parentUUID": "55e09e4e-0656-4fcc-a779-1bafb09b0f1e",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"Pruebas de Login Modal\"",
+              "fullTitle": "Pruebas de Login Modal \"after all\" hook in \"Pruebas de Login Modal\"",
+              "timedOut": false,
+              "duration": 86,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await driver.quit();",
+              "err": {},
+              "uuid": "e5931e91-c071-40d6-a2f9-f6f6cc8b0b37",
+              "parentUUID": "55e09e4e-0656-4fcc-a779-1bafb09b0f1e",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [
+            {
+              "title": "Debe realizar login exitosamente y mostrar mensaje de éxito",
+              "fullTitle": "Pruebas de Login Modal Debe realizar login exitosamente y mostrar mensaje de éxito",
+              "timedOut": false,
+              "duration": 2379,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "try {\n    // Navega a la aplicación\n    await driver.get('http://localhost:5173/'); // Cambia la URL según tu configuración\n    // Haz clic en el botón \"Login\" para abrir el modal\n    const loginButton = await driver.findElement(By.xpath('//button[text()=\"Login\"]'));\n    await driver.wait(until.elementIsVisible(loginButton), 15000);\n    await loginButton.click();\n    // Espera a que el modal se abra buscando el contenedor con la clase \"MuiBox-root\"\n    const modal = await driver.wait(\n        until.elementLocated(By.xpath('//div[contains(@class, \"MuiBox-root\") and contains(@class, \"css-1wnsr1i\")]')),\n        5000\n    );\n    // Rellena el campo \"Usuario\"\n    const userField = await modal.findElement(By.xpath('//input[@type=\"text\"]'));\n    await userField.sendKeys('joaquin@correo.com');\n    // Rellena el campo \"Contraseña\"\n    const passwordField = await modal.findElement(By.xpath('//input[@type=\"password\"]'));\n    await passwordField.sendKeys('j@123');\n    // Haz clic en el botón \"Iniciar sesión\"\n    const submitButton = await modal.findElement(By.xpath('//button[text()=\"Iniciar sesión\"]'));\n    await driver.wait(until.elementIsVisible(submitButton), 10000);\n    await driver.executeScript(\"arguments[0].click();\", submitButton);\n    // Espera a que aparezca el mensaje de éxito (Toast)\n    const successToast = await driver.wait(\n        until.elementLocated(By.xpath('//div[contains(@class, \"Toastify__toast--success\")]')),\n        10000\n    );\n    await driver.sleep(1000);\n    // Verifica el contenido del mensaje\n    const toastMessage = await successToast.getText();\n    assert.strictEqual(toastMessage, 'Login Exitoso');\n} catch (err) {\n    throw new Error('Error durante la prueba: ' + err.message);\n}",
+              "err": {},
+              "uuid": "8f62440f-df10-4efc-8234-c364d572ee33",
+              "parentUUID": "55e09e4e-0656-4fcc-a779-1bafb09b0f1e",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "8f62440f-df10-4efc-8234-c364d572ee33"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2379,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 30000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.8.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "login-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "reports",
+        "reportFilename": "login-report",
+        "inlineAssets": "true"
+      },
+      "version": "6.2.0"
+    }
+  }
+}
